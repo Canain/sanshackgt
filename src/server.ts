@@ -27,7 +27,7 @@ export default class Server {
 		
 		this.app.use(bodyParser.json());
 		
-		this.app.get('/auth/windowslive', this.passport.authenticate('windowslive', { scope: ['wl.signin', 'wl.basic'] }));
+		this.app.get('/auth/windowslive', this.passport.authenticate('windowslive', { scope: ['wl.signin'] }));
 		
 		this.app.get('/auth/windowslive/callback', this.passport.authenticate('windowslive'), this.auth.bind(this));
 	}
