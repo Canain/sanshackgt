@@ -23,7 +23,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('install', function () {
-	return gulp.src(['package.json', 'tsd.json']).pipe(install());
+	return gulp.src(['tsd.json']).pipe(install());
 });
 
 gulp.task('js', function () {
