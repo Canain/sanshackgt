@@ -8,10 +8,14 @@ declare module 'passport-windowslive' {
 		callbackURL: string;
 	}
 	
+	interface TokenHandler {
+		(accessToken, refreshToken, profile, done);
+	}
+	
 	export class Strategy implements passport.Strategy {
         name: string;
         authenticate(req: express.Request, options?: Object): void;
 		
-		constructor(options: StrategyOptions);
+		constructor(options: StrategyOptions, handler: TokenHandler);
 	}
 }
