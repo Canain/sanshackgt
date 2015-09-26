@@ -2,4 +2,4 @@
 
 import Server from './server';
 
-(new Server(5000)).listen();
+(new Server(process.env.PORT)).listen();
