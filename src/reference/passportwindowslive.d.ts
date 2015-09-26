@@ -1,4 +1,4 @@
-declare module 'passport-google-oauth2' {
+declare module 'passport-windowslive' {
 	import * as passport from 'passport';
 	import * as express from 'express';
 	
@@ -6,7 +6,6 @@ declare module 'passport-google-oauth2' {
 		clientID: string;
 		clientSecret: string;
 		callbackURL: string;
-		passReqToCallback: boolean;
 	}
 	
 	export class Strategy implements passport.Strategy {
