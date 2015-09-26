@@ -2,6 +2,7 @@
   "name": "sanshackgt",
   "version": "0.0.1",
   "dependencies": {
+    "bluebird": "^2.10.1",
     "body-parser": "^1.14.0",
     "del": "^2.0.2",
     "doqmentdb": "^0.3.1",
@@ -14,6 +15,8 @@
     "gulp-util": "^3.0.6",
     "latest-version": "^1.0.1",
     "lodash": "^3.10.1",
+    "passport": "^0.3.0",
+    "passport-google-oauth2": "^0.1.6",
     "run-sequence": "^1.1.4",
     "tsd": "^0.6.4",
     "unique-stream": "^2.2.0",

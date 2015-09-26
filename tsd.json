@@ -9,21 +9,27 @@
       "commit": "7c27233ae47768442b9b0a40d7f03fadf593fad2"
     },
     "node/node.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
+      "commit": "54f064352a3615443f7bff4198078db15e28247b"
     },
     "body-parser/body-parser.d.ts": {
       "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
     "mime/mime.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
+      "commit": "54f064352a3615443f7bff4198078db15e28247b"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
+      "commit": "54f064352a3615443f7bff4198078db15e28247b"
     },
     "express/express.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
+      "commit": "54f064352a3615443f7bff4198078db15e28247b"
     },
     "documentdb/documentdb.d.ts": {
+      "commit": "54f064352a3615443f7bff4198078db15e28247b"
+    },
+    "passport/passport.d.ts": {
+      "commit": "54f064352a3615443f7bff4198078db15e28247b"
+    },
+    "bluebird/bluebird.d.ts": {
       "commit": "54f064352a3615443f7bff4198078db15e28247b"
     }
   }

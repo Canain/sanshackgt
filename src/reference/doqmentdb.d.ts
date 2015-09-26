@@ -2,6 +2,7 @@
 
 declare module 'doqmentdb' {
 	import * as DocumentDB from 'documentdb';
+	import * as Promise from 'bluebird';
 	
 	export default class DoQmentDB {
 		
@@ -46,22 +47,22 @@ declare module 'doqmentdb' {
 		* get object properties to search, find the equivalents
 		* and modify them.
 		*/
-		findAndModify(sDoc, nDoc): any;
+		findAndModify(sDoc, nDoc): Promise<any>;
 		
 		/**
 		* get object properties to search, find the equivalents
 		* and modify them.
 		*/
-		update(sDoc, nDoc): any;
+		update(sDoc, nDoc): Promise<any>;
 		
 		/**
 		 * get object properties and modify the first matching.
 		 */
-		findOneAndModify(sDoc, nDoc): any;
+		findOneAndModify(sDoc, nDoc): Promise<any>;
 		
 		/**
 		 * get object properties and modify the first matching.
 		 */
-		updateOne(sDoc, nDoc): any;
+		updateOne(sDoc, nDoc): Promise<any>;
 	}
 }
