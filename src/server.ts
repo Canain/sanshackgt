@@ -6,7 +6,6 @@ import * as bodyParser from 'body-parser';
 import * as passport from 'passport';
 import {Passport} from 'passport';
 import {Strategy as WindowsLiveStrategy} from 'passport-windowslive';
-import * as session from 'express-session';
 import {Strategy as BearerStrategy} from 'passport-http-bearer';
 
 export default class Server {
@@ -43,9 +42,7 @@ export default class Server {
 		
 		this.app.use(express.static(process.cwd() + '/pub'));
 		this.app.use(bodyParser.json());
-		// this.app.use((<any>session).default({secret: 'sanshackgt'}));
 		this.app.use(this.passport.initialize());
-		// this.app.use(this.passport.session());
 		
 		this.app.get('/auth/windowslive', this.passport.authenticate('windowslive', {
 			session: false,
