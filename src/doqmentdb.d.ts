@@ -18,11 +18,40 @@ declare module 'doqmentdb' {
 		use(collName: string): Collection;
 	}
 	
+	interface SchemaField {
+		type;
+		default?;
+		regex?: string;
+		error?: string;
+		expose?: boolean;
+	}
+	
+	interface Schema {
+		(attribute: string): SchemaField;
+	}
+	
 	class Collection {
 		
 		/**
 		* Collection constructor called gets from DoQmentDB.use()
 		*/
 		constructor(conn, db, coll);
+		
+		/**
+		 * initialize schema service
+		 */
+		schema(schema: Schema);
+		
+		/**
+		* get object properties to search, find the equivalents
+		* and modify them.
+		*/
+		findAndModify(sDoc, nDoc): any;
+		
+		/**
+		* get object properties to search, find the equivalents
+		* and modify them.
+		*/
+		update(sDoc, nDoc): any;
 	}
 }
