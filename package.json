@@ -13,7 +13,8 @@
     "latest-version": "^1.0.1",
     "lodash": "^3.10.1",
     "run-sequence": "^1.1.4",
-    "tsd": "^0.6.4"
+    "tsd": "^0.6.4",
+    "vinyl-fs": "^2.0.0"
   },
   "scripts": {
     "start": "node app.js",
