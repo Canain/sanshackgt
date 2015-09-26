@@ -6,6 +6,7 @@
     "del": "^2.0.2",
     "doqmentdb": "^0.3.1",
     "express": "^4.13.3",
+    "glob-stream": "^5.0.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
     "gulp-install": "^0.5.0",
