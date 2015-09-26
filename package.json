@@ -13,7 +13,8 @@
     "run-sequence": "^1.1.4"
   },
   "scripts": {
-    "start": "node out/babel/main.js"
+    "start": "node app.js",
+    "postinstall": "gulp build"
   },
   "private": true
 }
