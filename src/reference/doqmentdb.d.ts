@@ -1,8 +1,10 @@
 /// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="bluebird.d.ts" />
+
 
 declare module 'doqmentdb' {
 	import * as DocumentDB from 'documentdb';
-	import * as Promise from 'bluebird';
+	import Promise from 'bluebird';
 	
 	export default class DoQmentDB {
 		
