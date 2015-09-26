@@ -37,3 +37,22 @@ gulp.task('js', function () {
 gulp.task('build', function (done) {
 	runSequence(['clean', 'install'], 'js', done);
 });
+
+gulp.task('build-debug', function (done) {
+	runSequence('clean', 'js', done);
+});
+
+gulp.task('run', function () {
+	require('./app');
+});
+
+gulp.task('test', function (done) {
+	runSequence('build', 'run', done);
+});
+
+gulp.task('debug', function (done) {
+	runSequence('build-debug', 'run', done);
+});
+
+gulp.task('d', ['debug']);
+gulp.task('default', ['test']);
