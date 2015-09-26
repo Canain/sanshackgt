@@ -7,6 +7,7 @@ import * as passport from 'passport';
 import {Passport} from 'passport';
 import {Strategy as WindowsLiveStrategy} from 'passport-windowslive';
 import * as session from 'express-session';
+import {Strategy as BearerStrategy} from 'passport-http-bearer';
 
 export default class Server {
 	
@@ -24,6 +25,14 @@ export default class Server {
 			callbackURL: "http://lmb1w.canain.com:8080/auth/windowslive/callback"
 		}, this.token.bind(this)));
 		
+		this.passport.use(new BearerStrategy((token, done) => {
+			done(null, {
+				data: token
+			}, {
+				scope: 'all'
+			});
+		}));
+		
 		this.passport.serializeUser((user, done) => {
 			done(null, user);
 		});
@@ -34,12 +43,27 @@ export default class Server {
 		
 		this.app.use(express.static(process.cwd() + '/pub'));
 		this.app.use(bodyParser.json());
-		this.app.use((<any>session).default({secret: 'sanshackgt'}));
+		// this.app.use((<any>session).default({secret: 'sanshackgt'}));
 		this.app.use(this.passport.initialize());
-		this.app.use(this.passport.session());
+		// this.app.use(this.passport.session());
 		
-		this.app.get('/auth/windowslive', this.passport.authenticate('windowslive', { scope: ['wl.signin'] }));
-		this.app.get('/auth/windowslive/callback', this.passport.authenticate('windowslive'), this.auth.bind(this));
+		this.app.get('/auth/windowslive', this.passport.authenticate('windowslive', {
+			session: false,
+			scope: ['wl.signin']
+		}));
+		this.app.get('/auth/windowslive/callback', this.passport.authenticate('windowslive', {
+			session: false
+		}), this.auth.bind(this));
+		this.app.get('/profile', this.passport.authenticate('bearer', {
+			session: false
+		}), this.profile.bind(this));
+	}
+	
+	profile(req: Request, res: Response) {
+		res.json({
+			success: true,
+			user: req.user.data
+		});
 	}
 	
 	token(accessToken, refreshToken, profile, done) {
@@ -55,10 +79,10 @@ export default class Server {
 	}
 	
 	auth(req: Request, res: Response) {
-		// req.body
 		res.json({
-			success: true
+			access_token: req.user.accessToken
 		});
+		// req.body
 	}
 	
 	listen() {

@@ -17,6 +17,7 @@
     "latest-version": "^1.0.1",
     "lodash": "^3.10.1",
     "passport": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
     "passport-windowslive": "^1.0.1",
     "run-sequence": "^1.1.4",
     "tsd": "^0.6.4",

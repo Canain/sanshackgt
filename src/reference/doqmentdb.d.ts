@@ -1,7 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
-/// <reference path="bluebird.d.ts" />
-
-
 declare module 'doqmentdb' {
 	import * as DocumentDB from 'documentdb';
 	import Promise from 'bluebird';
