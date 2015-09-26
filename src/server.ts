@@ -22,7 +22,7 @@ export default class Server {
 		this.passport.use(new WindowsLiveStrategy({
 			clientID: '000000004816E23D',
 			clientSecret: 'sy9Qmud6CIv0sZ1r950C7QaaQPLPsSmY',
-			callbackURL: "http://sanshackgt.azurewebsites.net/auth/windowslive/callback"
+			callbackURL: "https://sanshackgt.azurewebsites.net/auth/windowslive/callback"
 		}, this.token.bind(this)));
 		
 		this.app.use(bodyParser.json());
