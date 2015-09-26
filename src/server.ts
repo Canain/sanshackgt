@@ -7,13 +7,20 @@ import * as passport from 'passport';
 import {Passport} from 'passport';
 import {Strategy as WindowsLiveStrategy} from 'passport-windowslive';
 import {Strategy as BearerStrategy} from 'passport-http-bearer';
+import Data from './data';
 
 export default class Server {
 	
 	app: Express;
 	passport: Passport;
 	
+	data: Data;
+	
 	constructor(public port: number) {
+		this.data = new Data('https://sanshackgt.documents.azure.com', 443, {
+			masterKey: 'DOGn8uZHmEF6xKu9NdevnHThYDZfnFHLunZkgrZitRTrHmxCSA74Bu9DBE8Y24RmeYYFpQ2j3S'
+		});
+		
 		this.app = (<any>express).default();
 		this.passport = new (<any>passport).Passport();
 		
@@ -64,20 +71,16 @@ export default class Server {
 	}
 	
 	token(accessToken, refreshToken, profile, done) {
-		// User.findOrCreate({ windowsliveId: profile.id }, function (err, user) {
-		// return done(err, user);
-		// });
-		done(null, {
-			windowsliveId: profile.id,
-			accessToken: accessToken,
-			refreshToken: refreshToken,
-			profile: profile
+		this.data.users.update({ windowsliveId: profile.id }, {
+			access_token: accessToken
+		}, { upsert: true }, (error, affectedRows, raw) => {
+			done(error, raw);
 		});
 	}
 	
 	auth(req: Request, res: Response) {
 		res.json({
-			access_token: req.user.accessToken
+			access_token: req.user.access_token
 		});
 		// req.body
 	}
