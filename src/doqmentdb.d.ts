@@ -53,5 +53,15 @@ declare module 'doqmentdb' {
 		* and modify them.
 		*/
 		update(sDoc, nDoc): any;
+		
+		/**
+		 * get object properties and modify the first matching.
+		 */
+		findOneAndModify(sDoc, nDoc): any;
+		
+		/**
+		 * get object properties and modify the first matching.
+		 */
+		updateOne(sDoc, nDoc): any;
 	}
 }
