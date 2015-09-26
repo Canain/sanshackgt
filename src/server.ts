@@ -17,18 +17,14 @@ export default class Server {
 	data: Data;
 	
 	constructor(public port: number) {
-		this.data = new Data('https://sanshackgt.documents.azure.com', 443, {
-			masterKey: 'DOGn8uZHmEF6xKu9NdevnHThYDZfnFHLunZkgrZitRTrHmxCSA74Bu9DBE8Y24RmeYYFpQ2j3S'
-		});
-		
 		this.app = (<any>express).default();
 		this.passport = new (<any>passport).Passport();
 		
 		this.passport.use(new WindowsLiveStrategy({
 			clientID: '000000004816E23D',
 			clientSecret: 'sy9Qmud6CIv0sZ1r950C7QaaQPLPsSmY',
-			// callbackURL: "https://sanshackgt.azurewebsites.net/auth/windowslive/callback"
-			callbackURL: "http://lmb1w.canain.com:8080/auth/windowslive/callback"
+			callbackURL: "https://sanshackgt.azurewebsites.net/auth/windowslive/callback"
+			// callbackURL: "http://lmb1w.canain.com:8080/auth/windowslive/callback"
 		}, this.token.bind(this)));
 		
 		this.passport.use(new BearerStrategy((token, done) => {
@@ -86,8 +82,16 @@ export default class Server {
 	}
 	
 	listen() {
-		this.app.listen(this.port, () => {
-			console.log('[Server] Listening on port ' + this.port);
+		this.data = new Data('https://sanshackgt.documents.azure.com', 443, 'sanshackgt', {
+			masterKey: 'DOGn8uZHmEF6xKu9NdevnHThYDZfnFHLunZkgrZitRTrHmxCSA74Bu9DBE8Y24RmeYYFpQ2j3S'
+		}, (error) => {
+			if (error) {
+				console.error(error);
+				return;
+			}
+			this.app.listen(this.port, () => {
+				console.log('[Server] Listening on port ' + this.port);
+			});
 		});
 	}
 }

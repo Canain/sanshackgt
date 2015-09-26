@@ -9,9 +9,15 @@ export default class Data {
 	user: Schema;
 	users: Model<any>;
 	
-	constructor(uri: string, port: number, options: Docooment.AuthOptions) {
-		this.db = docooment.connect(uri, port, 'sanshackgt', options);
-		this.user = new docooment.Schema({}, { strict: false });
-		this.users = docooment.model('User', this.user);
+	constructor(uri: string, port: number, database: string, options: Docooment.AuthOptions, done: ErrorCallback) {
+		this.db = docooment.connect(uri, port, database, options, (error) => {
+			if (error) {
+				done(error);
+				return;
+			}
+			this.user = new docooment.Schema({}, { strict: false });
+			this.users = docooment.model('User', this.user);
+			done();
+		});
 	}
 }

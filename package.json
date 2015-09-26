@@ -2,6 +2,7 @@
   "name": "sanshackgt",
   "version": "0.0.1",
   "dependencies": {
+    "async": "^1.4.2",
     "bluebird": "^2.10.1",
     "body-parser": "^1.14.0",
     "del": "^2.0.2",
