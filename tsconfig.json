@@ -1,10 +1,9 @@
 {
 	"compilerOptions": {
 		"removeComments": true,
-		"target": "ES6",
-		"outDir": "./out/ts/"
+		"target": "ES6"
 	},
 	"files": [
-		"src/main.ts"
+		"src/server.ts"
 	]
 }
