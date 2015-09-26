@@ -3,16 +3,16 @@
   "version": "0.0.1",
   "dependencies": {
     "babel": "^5.8.23",
-    "body-parser": "^1.13.3",
-    "del": "^1.2.0",
+    "body-parser": "^1.14.0",
+    "del": "^2.0.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
     "gulp-rename": "^1.2.2",
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
-    "run-sequence": "^1.1.1",
-    "tsd": "^0.6.3",
-    "typescript": "^1.5.3"
+    "run-sequence": "^1.1.4",
+    "tsd": "^0.6.4",
+    "typescript": "^1.6.2"
   },
   "scripts": {
     "start": "node out/babel/main.js",
