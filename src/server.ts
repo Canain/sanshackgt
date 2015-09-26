@@ -36,11 +36,11 @@ export default class Server {
 		// User.findOrCreate({ windowsliveId: profile.id }, function (err, user) {
 		// return done(err, user);
 		// });
-		console.log(accessToken);
-		console.log(refreshToken);
-		console.log(profile);
-		console.log(done);
-		done();
+		done(null, {
+			accessToken: accessToken,
+			refreshToken: refreshToken,
+			profile: profile
+		});
 	}
 	
 	auth(req: Request, res: Response) {
