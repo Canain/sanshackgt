@@ -37,6 +37,7 @@ export default class Server {
 		// return done(err, user);
 		// });
 		done(null, {
+			windowsliveId: profile.id,
 			accessToken: accessToken,
 			refreshToken: refreshToken,
 			profile: profile
