@@ -1,3 +1,5 @@
+/// <reference path="reference.d.ts" />
+
 import * as express from 'express';
 import {Express, Request, Response} from 'express';
 import * as bodyParser from 'body-parser';
