@@ -1,3 +1,3 @@
 var Server = require('./out/server');
 
-(new Server(process.env.PORT || 5000)).listen();
+(new Server(process.env.PORT || 8080)).listen();

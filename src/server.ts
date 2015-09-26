@@ -11,6 +11,8 @@ export default class Server {
 	constructor(public port: number) {
 		this.app = (<any>express).default();
 		
+		this.app.use(express.static(process.cwd() + '/pub'));
+		
 		this.app.use(bodyParser.json());
 		
 		this.app.post('/index', this.index.bind(this));
