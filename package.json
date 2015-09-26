@@ -10,7 +10,8 @@
     "gulp-install": "^0.5.0",
     "gulp-typescript": "^2.9.0",
     "lodash": "^3.10.1",
-    "run-sequence": "^1.1.4"
+    "run-sequence": "^1.1.4",
+    "tsd": "^0.6.4"
   },
   "scripts": {
     "start": "node app.js",
