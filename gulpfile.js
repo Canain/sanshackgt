@@ -90,7 +90,11 @@ gulp.task('babel', function (done) {
 });
 
 gulp.task('clean', function (done) {
-	del(['out'], done);
+	del(['out']).then(function (paths) {
+		done();
+	}).catch(function (error) {
+		done(error);
+	});
 });
 
 gulp.task('js', function (done) {
