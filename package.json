@@ -15,8 +15,7 @@
     "typescript": "^1.6.2"
   },
   "scripts": {
-    "start": "node out/babel/main.js",
-    "postinstall": "gulp build"
+    "start": "node out/babel/main.js"
   },
   "private": true
 }
