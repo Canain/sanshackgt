@@ -6,7 +6,7 @@
     "bluebird": "^2.10.1",
     "body-parser": "^1.14.0",
     "del": "^2.0.2",
-    "docooment": "^0.5.3",
+    "documentdb": "^1.2.2",
     "express": "^4.13.3",
     "glob-stream": "^5.0.0",
     "gulp": "^3.9.0",

@@ -17,6 +17,8 @@ export default class Server {
 	data: Data;
 	
 	constructor(public port: number) {
+		this.data = new Data('https://sanshackgt.documents.azure.com:443/', 'DOGn8uZHmEF6xKu9NdevnHThYDZfnFHLunZkgrZitRTrHmxCSA74Bu9DBE8Y24RmeYYFpQ2j3S+wrbrw3Y1UCA==');
+		
 		this.app = (<any>express).default();
 		this.passport = new (<any>passport).Passport();
 		
@@ -67,11 +69,11 @@ export default class Server {
 	}
 	
 	token(accessToken, refreshToken, profile, done) {
-		this.data.users.update({ windowsliveId: profile.id }, {
-			access_token: accessToken
-		}, { upsert: true }, (error, affectedRows, raw) => {
-			done(error, raw);
-		});
+		// this.data.users.update({ windowsliveId: profile.id }, {
+		// 	access_token: accessToken
+		// }, { upsert: true }, (error, affectedRows, raw) => {
+		// 	done(error, raw);
+		// });
 	}
 	
 	auth(req: Request, res: Response) {
@@ -82,9 +84,7 @@ export default class Server {
 	}
 	
 	listen() {
-		this.data = new Data('https://sanshackgt.documents.azure.com', 443, 'sanshackgt', {
-			masterKey: 'DOGn8uZHmEF6xKu9NdevnHThYDZfnFHLunZkgrZitRTrHmxCSA74Bu9DBE8Y24RmeYYFpQ2j3S'
-		}, (error) => {
+		this.data.connect((error) => {
 			if (error) {
 				console.error(error);
 				return;
