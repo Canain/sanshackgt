@@ -40,6 +40,7 @@ export default class Server {
 		console.log(refreshToken);
 		console.log(profile);
 		console.log(done);
+		done();
 	}
 	
 	auth(req: Request, res: Response) {
