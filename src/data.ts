@@ -81,11 +81,8 @@ export default class Data {
 			if (error) {
 				return done(error, null);
 			}
-			if (rowCount == 0) {
-				done(new Error('No user with token found'), null);
-			} else {
-				done(null, values);
-			}
+			
+			done(null, values);
 		});
 		
 		request.on('row', (columns) => {
