@@ -107,7 +107,7 @@ export default class Server {
 					error: error
 				});
 			}
-			this.analyzer.analyze(req.body.cat1, req.body.ca2, items, (error, result) => {
+			this.analyzer.analyze(req.body.cat1, req.body.cat2, items, (error, result) => {
 				res.json({
 					success: true,
 					data: result
