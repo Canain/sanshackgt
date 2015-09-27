@@ -25,11 +25,12 @@ export default class Server {
 		this.passport.use(new WindowsLiveStrategy({
 			clientID: '000000004816E23D',
 			clientSecret: 'sy9Qmud6CIv0sZ1r950C7QaaQPLPsSmY',
-			callbackURL: "https://sanshackgt.azurewebsites.net/auth/windowslive/callback"
+			callbackURL: 'https://sanshackgt.azurewebsites.net/auth/windowslive/callback'
 			// callbackURL: "http://lmb1w.canain.com:8080/auth/windowslive/callback"
 		}, this.token.bind(this)));
 		
 		this.passport.use(new BearerStrategy((token, done) => {
+			
 			done(null, {
 				data: token
 			}, {

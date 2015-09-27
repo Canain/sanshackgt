@@ -29,6 +29,10 @@ export default class Data {
 		return data.replace(/'/g, "''");
 	}
 	
+	strip(data: string) {
+		return data.replace(/;|'|"|,/g, '');
+	}
+	
 	connect(done: ErrorCallback) {
 		this.connection = new Connection(this.config);
 		
@@ -39,7 +43,7 @@ export default class Data {
 			
 			console.log('[Server] Connected to SQL Database');
 			
-			this.connection.execSql(new Request('CREATE TABLE dbo.Users(id int IDENTITY(1,1) PRIMARY KEY, windowsliveId VARCHAR(MAX), firstname VARCHAR(MAX), lastname VARCHAR(MAX), access_token VARCHAR(MAX))', (error, rowCount, rows) => {
+			this.connection.execSql(new Request('CREATE TABLE dbo.Users(id int IDENTITY(1,1) PRIMARY KEY, windowsliveId VARCHAR(MAX), firstname VARCHAR(MAX), lastname VARCHAR(MAX), budget DOUBLE PRECISION, access_token VARCHAR(MAX))', (error, rowCount, rows) => {
 				if (error && error.message.indexOf('There is already an object named') == -1) {
 					return done(error);
 				}
@@ -47,6 +51,31 @@ export default class Data {
 				done();
 			}));
 		});
+	}
+	
+	set(id: number, data, done: ErrorCallback) {
+		let sql = 'UPDATE Users SET ';
+		
+		let prefix = '';
+		for (let i in data) {
+			sql += prefix + this.strip(i) + '=';
+			let k = data[i];
+			if (typeof k == 'string') {
+				sql += "'" + this.escape(k) + "'";
+			} else {
+				sql += this.strip(k);
+			}
+			prefix = ',';
+		}
+		sql += ' WHERE id=' + id;
+		
+		this.connection.execSql(new Request(sql, (error, rowCount, rows) => {
+			done(error);
+		}));
+	}
+	
+	retrieve(access_token: string, done: AsyncResultCallback<number>) {
+		// let request = new Request('SELECT ')
 	}
 	
 	token(windowsliveId: string, access_token: string, profile, done: AsyncResultCallback<any>) {
