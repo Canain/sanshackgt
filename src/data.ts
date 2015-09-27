@@ -1,6 +1,7 @@
 import {Connection, Request, ConnectionConfig} from 'tedious';
 import * as async from 'async';
 import * as _ from 'lodash';
+import * as randtoken from 'rand-token';
 
 interface User {
 	id: string;
@@ -161,7 +162,8 @@ export default class Data {
 		this.connection.execSql(request);
 	}
 	
-	token(windowsliveId: string, access_token: string, profile, done: AsyncResultCallback<any>) {
+	token(windowsliveId: string, liveToken: string, profile, done: AsyncResultCallback<any>) {
+		let access_token = randtoken.suid(24, new Date().getTime());
 		let token = this.escape(access_token);
 		let id = this.escape(windowsliveId);
 		let firstName = this.escape(profile.name.givenName);
@@ -174,12 +176,14 @@ export default class Data {
 			if (rowCount == 0) {
 				this.connection.execSql(new Request("INSERT INTO Users (windowsliveId,firstname,lastname,access_token) VALUES ('" + id + "', '" + firstName + "', '" + lastName + "', '" + token + "')", (error, rowCount, rows) => {
 					done(error, {
-						access_token: access_token
+						access_token: access_token,
+						liveToken: liveToken
 					});
 				}));
 			} else {
 				done(null, {
-					access_token: access_token
+					access_token: access_token,
+					liveToken: liveToken
 				});
 			}
 		}));
