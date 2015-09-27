@@ -17,7 +17,7 @@ export default class Server {
 	data: Data;
 	
 	constructor(public port: number) {
-		this.data = new Data('https://sanshackgt.documents.azure.com:443/', 'DOGn8uZHmEF6xKu9NdevnHThYDZfnFHLunZkgrZitRTrHmxCSA74Bu9DBE8Y24RmeYYFpQ2j3S+wrbrw3Y1UCA==');
+		this.data = new Data('sanshackgt.database.windows.net', 'Canain', 'superSecurePassword&');
 		
 		this.app = (<any>express).default();
 		this.passport = new (<any>passport).Passport();
@@ -51,7 +51,7 @@ export default class Server {
 		
 		this.app.get('/auth/windowslive', this.passport.authenticate('windowslive', {
 			session: false,
-			scope: ['wl.signin']
+			scope: ['wl.signin', 'wl.basic', 'wl.skydrive', 'wl.skydrive_update']
 		}));
 		this.app.get('/auth/windowslive/callback', this.passport.authenticate('windowslive', {
 			session: false
@@ -64,16 +64,12 @@ export default class Server {
 	profile(req: Request, res: Response) {
 		res.json({
 			success: true,
-			user: req.user.data
+			user: req.user
 		});
 	}
 	
 	token(accessToken, refreshToken, profile, done) {
-		// this.data.users.update({ windowsliveId: profile.id }, {
-		// 	access_token: accessToken
-		// }, { upsert: true }, (error, affectedRows, raw) => {
-		// 	done(error, raw);
-		// });
+		this.data.token(profile.id, accessToken, profile, done);
 	}
 	
 	auth(req: Request, res: Response) {

@@ -6,7 +6,6 @@
     "bluebird": "^2.10.1",
     "body-parser": "^1.14.0",
     "del": "^2.0.2",
-    "documentdb": "^1.2.2",
     "express": "^4.13.3",
     "glob-stream": "^5.0.0",
     "gulp": "^3.9.0",
@@ -20,6 +19,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-windowslive": "^1.0.1",
     "run-sequence": "^1.1.4",
+    "tedious": "^1.12.3",
     "tsd": "^0.6.4",
     "unique-stream": "^2.2.0",
     "vinyl-fs": "^2.0.0"
