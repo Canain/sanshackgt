@@ -82,14 +82,14 @@ export default class Data {
 				return done(error, null);
 			}
 			
-			if (rowCount == 0) {
-				return done(null, '');
-			}
 			done(null, value);
 		});
 		
 		request.on('row', (columns) => {
 			value = columns[0].value;
+			if (value == null) {
+				value = '';
+			}
 		});
 		
 		this.connection.execSql(request);
