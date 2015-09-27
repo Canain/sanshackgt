@@ -117,9 +117,18 @@ export default class Server {
 						});
 					}
 					this.analyzer.analyze(req.body.cat1, req.body.cat2, items, (error, result) => {
-						res.json({
-							success: true,
-							data: result
+						this.data.cache(req.user.id, result, (error) => {
+							if (error) {
+								return res.json({
+									success: false,
+									error: error
+								});
+							}
+							
+							res.json({
+								success: true,
+								data: result
+							});
 						});
 					});
 				});

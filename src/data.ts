@@ -95,6 +95,13 @@ export default class Data {
 		this.connection.execSql(request);
 	}
 	
+	cache(id: number, analysis: string, done: ErrorCallback) {
+		let sql = "UPDATE Users SET analysis='" + this.escape(analysis) + "' WHERE id=" + id;
+		this.connection.execSql(new Request(sql, (error, rowCount, rows) => {
+			done(error);
+		}));
+	}
+	
 	items(id: number, done: AsyncResultArrayCallback<Item>) {
 		let sql = "SELECT time,name,cost FROM Items WHERE owner=" + id;
 		
