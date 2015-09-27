@@ -100,19 +100,35 @@ export default class Server {
 	}
 	
 	analyze(req: Request, res: Response) {
-		this.data.items(req.user.id, (error, items) => {
+		this.data.analysis(req.user.id, (error, analysis) => {
 			if (error) {
 				return res.json({
 					success: false,
 					error: error
 				});
 			}
-			this.analyzer.analyze(req.body.cat1, req.body.cat2, items, (error, result) => {
+			
+			if (analysis == '') {
+				this.data.items(req.user.id, (error, items) => {
+					if (error) {
+						return res.json({
+							success: false,
+							error: error
+						});
+					}
+					this.analyzer.analyze(req.body.cat1, req.body.cat2, items, (error, result) => {
+						res.json({
+							success: true,
+							data: result
+						});
+					});
+				});
+			} else {
 				res.json({
 					success: true,
-					data: result
+					data: analysis
 				});
-			});
+			}
 		});
 	}
 	

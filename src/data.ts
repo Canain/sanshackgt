@@ -56,7 +56,7 @@ export default class Data {
 			
 			console.log('[Server] Connected to SQL Database');
 			
-			this.connection.execSql(new Request('CREATE TABLE dbo.Users(id int IDENTITY(1,1) PRIMARY KEY, windowsliveId VARCHAR(MAX), firstname VARCHAR(MAX), lastname VARCHAR(MAX), budget DOUBLE PRECISION, access_token VARCHAR(MAX))', (error, rowCount, rows) => {
+			this.connection.execSql(new Request('CREATE TABLE dbo.Users(id int IDENTITY(1,1) PRIMARY KEY, windowsliveId VARCHAR(MAX), firstname VARCHAR(MAX), lastname VARCHAR(MAX), budget DOUBLE PRECISION, access_token VARCHAR(MAX), analysis VARCHAR(MAX))', (error, rowCount, rows) => {
 				if (error && error.message.indexOf('There is already an object named') == -1) {
 					return done(error);
 				}
@@ -70,6 +70,29 @@ export default class Data {
 				}));
 			}));
 		});
+	}
+	
+	analysis(id: number, done: AsyncResultCallback<string>) {
+		let sql = "SELECT analysis FROM Users WHERE id=" + id;
+		
+		let value;
+		
+		let request = new Request(sql, (error, rowCount, rows) => {
+			if (error) {
+				return done(error, null);
+			}
+			
+			if (rowCount == 0) {
+				return done(null, '');
+			}
+			done(null, value);
+		});
+		
+		request.on('row', (columns) => {
+			value = columns[0].value;
+		});
+		
+		this.connection.execSql(request);
 	}
 	
 	items(id: number, done: AsyncResultArrayCallback<Item>) {

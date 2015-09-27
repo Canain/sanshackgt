@@ -26,7 +26,7 @@ export default class Analyzer {
 		};
 	}
 	
-	analyze(cat1: string, cat2: string, items: Item[], done: AsyncResultCallback<any>) {
+	analyze(cat1: string, cat2: string, items: Item[], done: AsyncResultCallback<string>) {
 		let send = {
 			"Inputs": {
 				"input1": {
@@ -79,7 +79,7 @@ export default class Analyzer {
 		};
 		
 		(<any>request).default(options, (error, response, body) => {
-			done(error, body);
+			done(error, JSON.stringify(body));
 		});
 	}
 	
