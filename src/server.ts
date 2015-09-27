@@ -8,6 +8,7 @@ import {Passport} from 'passport';
 import {Strategy as WindowsLiveStrategy} from 'passport-windowslive';
 import {Strategy as BearerStrategy} from 'passport-http-bearer';
 import Data from './data';
+import Analyzer from './analyzer';
 
 export default class Server {
 	
@@ -16,7 +17,10 @@ export default class Server {
 	
 	data: Data;
 	
+	analyzer: Analyzer;
+	
 	constructor(public port: number) {
+		this.analyzer = new Analyzer();
 		this.data = new Data('sanshackgt.database.windows.net', 'Canain', 'superSecurePassword&');
 		
 		this.app = (<any>express).default();
@@ -54,12 +58,30 @@ export default class Server {
 		this.app.get('/auth/windowslive/callback', this.passport.authenticate('windowslive', {
 			session: false
 		}), this.auth.bind(this));
-		this.app.get('/analyze', this.passport.authenticate('bearer', {
+		this.app.post('/analyze', this.passport.authenticate('bearer', {
 			session: false
 		}), this.analyze.bind(this));
 		this.app.post('/set', this.passport.authenticate('bearer', {
 			session: false
 		}), this.set.bind(this));
+		this.app.post('/add', this.passport.authenticate('bearer', {
+			session: false
+		}), this.add.bind(this));
+	}
+	
+	add(req: Request, res: Response) {
+		this.data.add(req.user.id, req.body, (error) => {
+			if (error) {
+				res.json({
+					success: false,
+					error: error
+				});
+			} else {
+				res.json({
+					success: true
+				});
+			}
+		});
 	}
 	
 	set(req: Request, res: Response) {
@@ -78,9 +100,19 @@ export default class Server {
 	}
 	
 	analyze(req: Request, res: Response) {
-		res.json({
-			success: true,
-			user: req.user
+		this.data.items(req.user.id, (error, items) => {
+			if (error) {
+				return res.json({
+					success: false,
+					error: error
+				});
+			}
+			this.analyzer.analyze(req.body.cat1, req.body.ca2, items, (error, result) => {
+				res.json({
+					success: true,
+					data: result
+				});
+			});
 		});
 	}
 	

@@ -7,7 +7,7 @@ interface User {
 	content: string;
 }
 
-interface Item {
+export interface Item {
 	name: string;
 	cost: number;
 	owner?: number;
@@ -60,9 +60,42 @@ export default class Data {
 					return done(error);
 				}
 				
-				done();
+				this.connection.execSql(new Request('CREATE TABLE dbo.Items(id int IDENTITY(1,1) PRIMARY KEY, owner INTEGER, time BIGINT, name VARCHAR(MAX), cost DOUBLE PRECISION)', (error, rowCount, rows) => {
+					if (error && error.message.indexOf('There is already an object named') == -1) {
+						return done(error);
+					}
+					
+					done();
+				}));
 			}));
 		});
+	}
+	
+	items(id: number, done: AsyncResultArrayCallback<Item>) {
+		let sql = "SELECT time,name,cost FROM Items WHERE owner=" + id;
+		
+		let values: Item[] = [];
+		
+		let request = new Request(sql, (error, rowCount, rows) => {
+			if (error) {
+				return done(error, null);
+			}
+			if (rowCount == 0) {
+				done(new Error('No user with token found'), null);
+			} else {
+				done(null, values);
+			}
+		});
+		
+		request.on('row', (columns) => {
+			values.push({
+				time: columns[0].value,
+				name: columns[1].value,
+				cost: columns[2].value
+			});
+		});
+		
+		this.connection.execSql(request);
 	}
 	
 	set(id: number, data, done: ErrorCallback) {

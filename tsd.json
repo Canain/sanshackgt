@@ -9,7 +9,7 @@
       "commit": "7c27233ae47768442b9b0a40d7f03fadf593fad2"
     },
     "node/node.d.ts": {
-      "commit": "54f064352a3615443f7bff4198078db15e28247b"
+      "commit": "b937e64fc9245d299fa4ba26c6eddbeaed42a920"
     },
     "body-parser/body-parser.d.ts": {
       "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
@@ -40,6 +40,12 @@
     },
     "tedious/tedious.d.ts": {
       "commit": "54f064352a3615443f7bff4198078db15e28247b"
+    },
+    "request/request.d.ts": {
+      "commit": "b937e64fc9245d299fa4ba26c6eddbeaed42a920"
+    },
+    "form-data/form-data.d.ts": {
+      "commit": "b937e64fc9245d299fa4ba26c6eddbeaed42a920"
     }
   }
 }
