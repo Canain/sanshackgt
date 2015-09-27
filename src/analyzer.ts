@@ -83,4 +83,53 @@ export default class Analyzer {
 		});
 	}
 	
+	fimp(items: Item[], done: AsyncResultCallback<string>) {
+		let send = {
+			"Inputs": {
+				"input1": {
+					"ColumnNames": [
+						"Cereals",
+						"Bakery",
+						"Meats",
+						"Poultry",
+						"Fish",
+						"Eggs",
+						"Dairy",
+						"Fruits",
+						"Vegetables",
+						"Sugars/sweets",
+						"Fats/Oils",
+						"Grains",
+						"Total",
+						"OB"
+					],
+					"Values": []
+				}
+			},
+			"GlobalParameters": {}
+		};
+		
+		for (let i = 1; i < this.sample.length; i++) {
+			let row = [];
+			this.sample[i].forEach((val) => {
+				row.push(val.toString());
+			});
+			send.Inputs.input1.Values.push(row);
+		}
+		
+		let options: request.Options = {
+			method: 'POST',
+			url: 'https://ussouthcentral.services.azureml.net/workspaces/185c8f460bfa4d41882444a51f9d201d/services/e104a6b2f5324ae894ff0b3886b7698f/execute',
+			qs: { 'api-version': '2.0', details: 'true' },
+			headers: { authorization: 'Bearer v4BGcworqAWZD5O07MhsnF/CLSPqyF6s3NWOUaPfrJaegmO0jZtSrGd4lUn5c7Ws4c6B/xMUOSRsI9TTQT43/Q==',
+			'content-type': 'application/json' },
+			body: send,
+			json: true
+		};
+		
+		(<any>request).default(options, (error, response, body) => {
+			done(error, JSON.stringify(body));
+		});
+	}
+	
 }

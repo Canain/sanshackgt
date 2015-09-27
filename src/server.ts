@@ -70,6 +70,9 @@ export default class Server {
 		this.app.get('/get', this.passport.authenticate('bearer', {
 			session: false
 		}), this.get.bind(this));
+		this.app.get('/fimp', this.passport.authenticate('bearer', {
+			session: false
+		}), this.fimp.bind(this));
 	}
 	
 	get(req: Request, res: Response) {
@@ -127,6 +130,29 @@ export default class Server {
 				});
 			}
 			this.analyzer.analyze(req.body.cat1, req.body.cat2, items, (error, result) => {
+				if (error) {
+					return res.json({
+						success: false,
+						error: error
+					});
+				}
+				res.json({
+					success: true,
+					data: result
+				});
+			});
+		});
+	}
+	
+	fimp(req: Request, res: Response) {
+		this.data.items(req.user.id, (error, items) => {
+			if (error) {
+				return res.json({
+					success: false,
+					error: error
+				});
+			}
+			this.analyzer.fimp(items, (error, result) => {
 				if (error) {
 					return res.json({
 						success: false,
