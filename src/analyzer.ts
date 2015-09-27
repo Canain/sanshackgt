@@ -15,23 +15,23 @@ export default class Analyzer {
 			"Inputs": {
 				"input1": {
 					"ColumnNames": [
-					"Cereals",
-					"Bakery",
-					"Meats",
-					"Poultry",
-					"Fish",
-					"Eggs",
-					"Dairy",
-					"Fruits",
-					"Vegetables",
-					"Sugars/sweets",
-					"Fats/Oils",
-					"Grains",
-					"Total",
-					"OB",
-					"ColumnNames"
-				],
-				"Values": []
+						"Cereals",
+						"Bakery",
+						"Meats",
+						"Poultry",
+						"Fish",
+						"Eggs",
+						"Dairy",
+						"Fruits",
+						"Vegetables",
+						"Sugars/sweets",
+						"Fats/Oils",
+						"Grains",
+						"Total",
+						"OB",
+						"ColumnNames"
+					],
+					"Values": []
 				}
 			},
 			"GlobalParameters": {}
@@ -44,6 +44,9 @@ export default class Analyzer {
 			});
 			send.Inputs.input1.Values.push(row);
 		}
+		
+		send.Inputs.input1.Values[0].push(cat1);
+		send.Inputs.input1.Values[1].push(cat2);
 		
 		let options: request.Options = {
 			url: 'https://ussouthcentral.services.azureml.net/workspaces/185c8f460bfa4d41882444a51f9d201d/services/0b7a260d3a3c41948935977937c83f74/execute?api-version=2.0&details=true',
