@@ -73,7 +73,7 @@ export default class Data {
 	}
 	
 	get(id: number, done: AsyncResultCallback<any>) {
-		let sql = "SELECT (firstname,lastname,budget) FROM Users WHERE id=" + id;
+		let sql = "SELECT firstname,lastname,budget FROM Users WHERE id=" + id;
 		
 		let value = {};
 		
@@ -98,6 +98,8 @@ export default class Data {
 			value['lastname'] = columns[1].value;
 			value['budget'] = columns[2].value;
 		});
+		
+		this.connection.execSql(request);
 	}
 	
 	analysis(id: number, done: AsyncResultCallback<string>) {
