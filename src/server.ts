@@ -67,6 +67,25 @@ export default class Server {
 		this.app.post('/add', this.passport.authenticate('bearer', {
 			session: false
 		}), this.add.bind(this));
+		this.app.get('/get', this.passport.authenticate('bearer', {
+			session: false
+		}), this.get.bind(this));
+	}
+	
+	get(req: Request, res: Response) {
+		this.data.get(req.user.id, (error, data) => {
+			if (error) {
+				res.json({
+					success: false,
+					error: error
+				});
+			} else {
+				res.json({
+					success: true,
+					data: data
+				});
+			}
+		});
 	}
 	
 	add(req: Request, res: Response) {
@@ -128,7 +147,8 @@ export default class Server {
 	
 	auth(req: Request, res: Response) {
 		res.json({
-			access_token: req.user.access_token
+			access_token: req.user.access_token,
+			liveToken: req.user.liveToken
 		});
 	}
 	

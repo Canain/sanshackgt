@@ -72,6 +72,34 @@ export default class Data {
 		});
 	}
 	
+	get(id: number, done: AsyncResultCallback<any>) {
+		let sql = "SELECT (firstname,lastname,budget) FROM Users WHERE id=" + id;
+		
+		let value = {};
+		
+		let request = new Request(sql, (error, rowCount, rows) => {
+			if (error) {
+				return done(error, null);
+			}
+			
+			this.items(id, (error, items) => {
+				if (error) {
+					return done(error, null);
+				}
+				
+				value['items'] = items;
+				
+				done(null, value);
+			});
+		});
+		
+		request.on('row', (columns) => {
+			value['firstname'] = columns[0].value;
+			value['lastname'] = columns[1].value;
+			value['budget'] = columns[2].value;
+		});
+	}
+	
 	analysis(id: number, done: AsyncResultCallback<string>) {
 		let sql = "SELECT analysis FROM Users WHERE id=" + id;
 		
