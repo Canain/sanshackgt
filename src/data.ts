@@ -7,6 +7,18 @@ interface User {
 	content: string;
 }
 
+interface Item {
+	name: string;
+	cost: number;
+	owner?: number;
+	time?: number;
+}
+
+interface Receipt {
+	time: number;
+	items: Item[];
+}
+
 export default class Data {
 	
 	config: ConnectionConfig;
@@ -74,8 +86,38 @@ export default class Data {
 		}));
 	}
 	
+	add(id: number, receipt: Receipt, done: ErrorCallback) {
+		let time = receipt.time;
+		let owner = id;
+		let items = receipt.items;
+		
+		let funcs = [];
+		
+		for (let i in items) {
+			let item = items[i];
+			funcs.push((next: ErrorCallback) => {
+				this.connection.execSql(new Request("INSERT INTO Items (owner,time,name,cost) VALUES (" + owner + "," + time + ",'" + this.escape(item.name) + "'," + item.cost + ")", (error, rowCount, rows) => {
+					next(error);
+				}));
+			});
+		}
+		
+		async.series(funcs, done);
+	}
+	
 	retrieve(access_token: string, done: AsyncResultCallback<number>) {
-		// let request = new Request('SELECT ')
+		let request = new Request("SELECT id FROM Users WHERE access_token='" + access_token + "'",
+		(error, rowCount, rows) => {
+			if (error) {
+				return done(error, null);
+			}
+		});
+		
+		request.on('row', (columns) => {
+			done(null, columns[0].value);
+		});
+		
+		this.connection.execSql(request);
 	}
 	
 	token(windowsliveId: string, access_token: string, profile, done: AsyncResultCallback<any>) {
