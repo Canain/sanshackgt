@@ -30,11 +30,8 @@ export default class Server {
 		}, this.token.bind(this)));
 		
 		this.passport.use(new BearerStrategy((token, done) => {
-			
-			done(null, {
-				data: token
-			}, {
-				scope: 'all'
+			this.data.retrieve(token, (error, id) => {
+				done(error, { id: id }, { scope: 'all' });
 			});
 		}));
 		
@@ -57,12 +54,30 @@ export default class Server {
 		this.app.get('/auth/windowslive/callback', this.passport.authenticate('windowslive', {
 			session: false
 		}), this.auth.bind(this));
-		this.app.get('/profile', this.passport.authenticate('bearer', {
+		this.app.get('/analyze', this.passport.authenticate('bearer', {
 			session: false
-		}), this.profile.bind(this));
+		}), this.analyze.bind(this));
+		this.app.post('/set', this.passport.authenticate('bearer', {
+			session: false
+		}), this.set.bind(this));
 	}
 	
-	profile(req: Request, res: Response) {
+	set(req: Request, res: Response) {
+		this.data.set(req.user.id, req.body, (error) => {
+			if (error) {
+				res.json({
+					success: false,
+					error: error
+				});
+			} else {
+				res.json({
+					success: true
+				});
+			}
+		});
+	}
+	
+	analyze(req: Request, res: Response) {
 		res.json({
 			success: true,
 			user: req.user
@@ -77,7 +92,6 @@ export default class Server {
 		res.json({
 			access_token: req.user.access_token
 		});
-		// req.body
 	}
 	
 	listen() {

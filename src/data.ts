@@ -75,7 +75,7 @@ export default class Data {
 			if (typeof k == 'string') {
 				sql += "'" + this.escape(k) + "'";
 			} else {
-				sql += this.strip(k);
+				sql += this.strip(k.toString());
 			}
 			prefix = ',';
 		}
@@ -106,15 +106,23 @@ export default class Data {
 	}
 	
 	retrieve(access_token: string, done: AsyncResultCallback<number>) {
-		let request = new Request("SELECT id FROM Users WHERE access_token='" + access_token + "'",
-		(error, rowCount, rows) => {
+		let sql = "SELECT id FROM Users WHERE access_token='" + access_token + "'";
+		
+		let value;
+		
+		let request = new Request(sql, (error, rowCount, rows) => {
 			if (error) {
 				return done(error, null);
+			}
+			if (rowCount == 0) {
+				done(new Error('No user with token found'), null);
+			} else {
+				done(null, value);
 			}
 		});
 		
 		request.on('row', (columns) => {
-			done(null, columns[0].value);
+			value = columns[0].value;
 		});
 		
 		this.connection.execSql(request);
